@@ -5,90 +5,159 @@ import math
 pygame.init()
 
 SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 800
+SCREEN_HEIGHT = 1000
 
-# Create a Pygame window
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Unfilled Triangle Drawing")
-
-
-
-
-x1 = 300
-x2 = 600
-y1 = 200
-y2 = 500
-desired = [(x1, y1), (x1, y2), (x2, y2), (x2, y1)]
-
-
 clock = pygame.time.Clock()
+font = pygame.font.Font(None, 36)
+image = pygame.image.load("isometric_test.png")
+image_rect = image.get_rect()
 
 angle = math.radians(-45)
 sin_angle = math.sin(angle)
 cos_angle = math.cos(angle)
-
-# isometric_vertices = [(490, 285), (200, 430), (430, 545), (720, 400)]
-isometric_vertices = [(750.0, 250.0), (450.0, 400.0), (750.0, 550.0), (1050.0, 400.0)]
-isometric_point = (750.0, 250.0)
-
-x = isometric_point[0]*math.sqrt(2)
-y = isometric_point[1]*math.sqrt(2)
-square_point = (x/2 * cos_angle - y * sin_angle, x/2 * sin_angle + y * cos_angle)
-print(square_point)
+sqrt_2 = math.sqrt(2)
 
 
-square_vertices = []
-for x, y in isometric_vertices:
+x1 = 30
+x2 = 140
+y1 = 550
+y2 = 740
 
-    x = x*math.sqrt(2)
-    y = y*math.sqrt(2)
-    new_x = (x/2 * cos_angle - y * sin_angle)
-    new_y = (x/2 * sin_angle + y * cos_angle)
-    square_vertices.append((new_x, new_y))
+final_squares = []
+final_isometrics = []
+final_point_square = 0
+final_point_isometric = 0
 
-square_vertices = [(x,  y + 300) for x, y in square_vertices]
-square_point = (square_point[0],  square_point[1] + 300)
-print(square_vertices)
+square_vertices = [(x1, y1), (x1, y2), (x2, y2), (x2, y1)]
+isometric_vertices = []
+for x, y in square_vertices:
+    new_x = 2*(x * cos_angle - y * sin_angle)/sqrt_2
+    new_y = (x * sin_angle + y * cos_angle)/sqrt_2
+    isometric_vertices.append((new_x, new_y))
+
+square_point = square_vertices[0]
+x = square_point[0]
+y = square_point[1]
+new_x = 2*(x * cos_angle - y * sin_angle)/sqrt_2
+new_y = (x * sin_angle + y * cos_angle)/sqrt_2
+isometric_point = (new_x, new_y)
 
 
-
-
-font = pygame.font.Font(None, 36)
-
-# Main game loop
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
+                x1 -= 10
+            elif event.key == pygame.K_w:
+                y1 -= 10
+            elif event.key == pygame.K_e:
+                x2 += 10
+            elif event.key == pygame.K_r:
+                y2 += 10
+            elif event.key == pygame.K_a:
+                x1 += 10
+            elif event.key == pygame.K_s:
+                y1 += 10
+            elif event.key == pygame.K_d:
+                x2 -= 10
+            elif event.key == pygame.K_f:
+                y2 -= 10
+            elif event.key == pygame.K_UP:
+                square_point = (square_point[0], square_point[1] - 10)
+            elif event.key == pygame.K_DOWN:
+                square_point = (square_point[0], square_point[1] + 10)
+            elif event.key == pygame.K_LEFT:
+                square_point = (square_point[0] - 10, square_point[1])
+            elif event.key == pygame.K_RIGHT:
+                square_point = (square_point[0] + 10, square_point[1])
+            elif event.key == pygame.K_n:
+                final_squares.append(square_vertices)
+                final_isometrics.append(isometric_vertices)
+                continue
+            elif event.key == pygame.K_b:
+                final_squares.pop()
+                final_isometrics.pop()
+                continue
+            elif event.key == pygame.K_m:
+                final_point_square = square_point
+                final_point_isometric = isometric_point
+                continue
+            
+            square_vertices = [(x1, y1), (x1, y2), (x2, y2), (x2, y1)]
+            isometric_vertices = []
+            for x, y in square_vertices:
+                new_x = 2*(x * cos_angle - y * sin_angle)/sqrt_2
+                new_y = (x * sin_angle + y * cos_angle)/sqrt_2
+                isometric_vertices.append((round(new_x), round(new_y)))
+
+            # square_point = square_vertices[0]
+            x = square_point[0]
+            y = square_point[1]
+            new_x = 2*(x * cos_angle - y * sin_angle)/sqrt_2
+            new_y = (x * sin_angle + y * cos_angle)/sqrt_2
+            isometric_point = (new_x, new_y)
+            print(square_vertices)
 
 
-    # Clear the screen
-    screen.fill((0, 0, 0))  # Fill with black to clear the screen
-
-    # Draw the unfilled triangle
-
-    for i, (x, y) in enumerate(square_vertices, start=1):
-        text_surface = font.render(str(i), True, (255, 255, 255))  # Render the vertex number
-        text_rect = text_surface.get_rect(center=(x, y - 15))  # Position the number above the vertex
-        screen.blit(text_surface, text_rect)
+    screen.fill((0, 0, 0)) 
+    screen.blit(image, image_rect)
 
     for i, (x, y) in enumerate(isometric_vertices, start=1):
-        text_surface = font.render(str(i), True, (255, 255, 255))  # Render the vertex number
-        text_rect = text_surface.get_rect(center=(x, y - 15))  # Position the number above the vertex
+        text_surface = font.render(str(i), True, (255, 255, 255))  
+        text_rect = text_surface.get_rect(center=(x, y - 15)) 
+        screen.blit(text_surface, text_rect)
+
+    for i, (x, y) in enumerate(square_vertices, start=1):
+        text_surface = font.render(str(i), True, (255, 255, 255))  
+        text_rect = text_surface.get_rect(center=(x, y - 15))  
         screen.blit(text_surface, text_rect)
 
 
     pygame.draw.polygon(screen, (255, 0, 0), isometric_vertices, 2)
     pygame.draw.polygon(screen, (255, 0, 0), square_vertices, 2)
-    pygame.draw.polygon(screen, (255, 255, 255), desired, 2)
-    pygame.draw.circle(screen, (0, 255, 0), isometric_point, 5)  # Red point at walker's position
-    pygame.draw.circle(screen, (0, 255, 0), square_point, 5)  # Red point at walker's position
+    pygame.draw.circle(screen, (0, 255, 0), isometric_point, 5)  
+    pygame.draw.circle(screen, (0, 255, 0), square_point, 5)
 
-    # Update the display
+    for v in final_squares:
+        pygame.draw.polygon(screen, (0, 255, 0), v, 2)  
+    for v in final_isometrics:
+        pygame.draw.polygon(screen, (0, 255, 0), v, 2)  
+
+
     pygame.display.flip()
 
     clock.tick(60)
+
+
+# salvar aqui num txt
+
+file_path = "output.txt"
+
+# Open the file in write mode
+with open(file_path, "w") as file:
+
+    file.write("squares\n")
+    for item in final_squares:
+        file.write(str(item) + "\n")
+
+    file.write("\nisometrics\n")
+    for item in final_isometrics:
+        file.write(str(item) + "\n")
+
+    file.write("\nsquare_point\n")
+    file.write(str(final_point_square) + "\n")
+
+    file.write("\nisometric_point\n")
+    file.write(str(final_point_isometric) + "\n")
+
+# Confirmation message
+print(f"Content of the list saved to {file_path}")
+
 
 # Quit Pygame
 pygame.quit()

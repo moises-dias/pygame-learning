@@ -13,16 +13,15 @@ font = pygame.font.Font(None, 36)
 image = pygame.image.load("isometric_test.png")
 image_rect = image.get_rect()
 
-angle = math.radians(-45)
+angle = math.radians(45)
 sin_angle = math.sin(angle)
 cos_angle = math.cos(angle)
 sqrt_2 = math.sqrt(2)
 
-
-x1 = 30
-x2 = 140
-y1 = 550
-y2 = 740
+x1 = 520
+x2 = 760
+y1 = 40
+y2 = 330
 
 final_squares = []
 final_isometrics = []
@@ -95,7 +94,7 @@ while running:
                 new_y = (x * sin_angle + y * cos_angle)/sqrt_2
                 isometric_vertices.append((round(new_x), round(new_y)))
 
-            # square_point = square_vertices[0]
+            print(isometric_vertices)
             x = square_point[0]
             y = square_point[1]
             new_x = 2*(x * cos_angle - y * sin_angle)/sqrt_2

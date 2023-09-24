@@ -10,7 +10,9 @@ SCREEN_HEIGHT = 1000
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
-image = pygame.image.load("isometric_test.png")
+img_name = "simple_isometric"
+img_extension = "png"
+image = pygame.image.load(f"assets/{img_name}.{img_extension}")
 image_rect = image.get_rect()
 
 angle = math.radians(45)
@@ -42,6 +44,7 @@ new_x = 2*(x * cos_angle - y * sin_angle)/sqrt_2
 new_y = (x * sin_angle + y * cos_angle)/sqrt_2
 isometric_point = (new_x, new_y)
 
+pressing_space = False
 
 running = True
 while running:
@@ -49,23 +52,24 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_SPACE:
+                pressing_space = False
+                print("false")
+        
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                x1 -= 10
+            if event.key == pygame.K_SPACE:
+                pressing_space = True
+                print("true")
+                continue
             elif event.key == pygame.K_w:
-                y1 -= 10
-            elif event.key == pygame.K_e:
-                x2 += 10
-            elif event.key == pygame.K_r:
-                y2 += 10
+                y1 += 10 if pressing_space else -10
             elif event.key == pygame.K_a:
-                x1 += 10
+                x1 += 10 if pressing_space else -10
             elif event.key == pygame.K_s:
-                y1 += 10
+                y2 += -10 if pressing_space else 10
             elif event.key == pygame.K_d:
-                x2 -= 10
-            elif event.key == pygame.K_f:
-                y2 -= 10
+                x2 += -10 if pressing_space else 10
             elif event.key == pygame.K_UP:
                 square_point = (square_point[0], square_point[1] - 10)
             elif event.key == pygame.K_DOWN:
@@ -99,7 +103,7 @@ while running:
             y = square_point[1]
             new_x = 2*(x * cos_angle - y * sin_angle)/sqrt_2
             new_y = (x * sin_angle + y * cos_angle)/sqrt_2
-            isometric_point = (new_x, new_y)
+            isometric_point = (round(new_x), round(new_y))
             print(square_vertices)
 
 
@@ -135,7 +139,7 @@ while running:
 
 # salvar aqui num txt
 
-file_path = "output.txt"
+file_path = f"assets/{img_name}.txt"
 
 # Open the file in write mode
 with open(file_path, "w") as file:
@@ -154,10 +158,6 @@ with open(file_path, "w") as file:
     file.write("\nisometric_point\n")
     file.write(str(final_point_isometric) + "\n")
 
-# Confirmation message
-print(f"Content of the list saved to {file_path}")
 
-
-# Quit Pygame
 pygame.quit()
 sys.exit()

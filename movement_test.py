@@ -8,6 +8,10 @@ SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 1000
 
 squares = [[(520, 40), (520, 330), (760, 330), (760, 40)]]
+x1 = squares[0][0][0]
+y1 = squares[0][0][1]
+x2 = squares[0][2][0]
+y2 = squares[0][2][1]
 
 isometrics = [[(480, 280), (190, 425), (430, 545), (720, 400)]]
 
@@ -28,7 +32,7 @@ isometric_new_walker_y_v = 0
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
-image = pygame.image.load("isometric_test.png")
+image = pygame.image.load("assets/simple_isometric.png")
 image_rect = image.get_rect()
 
 velocity = 2
@@ -59,11 +63,11 @@ while running:
 
     # squares = [[(520, 40), (520, 330), (760, 330), (760, 40)]]
 
-    if (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT]) and 520 <= walker_x + new_walker_x <= 760:
+    if (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT]) and x1 <= walker_x + new_walker_x <= x2:
         walker_x += new_walker_x
         isometric_walker_x += isometric_new_walker_x_h
         isometric_walker_y += isometric_new_walker_y_h
-    if (keys[pygame.K_UP] or keys[pygame.K_DOWN]) and 40 <= walker_y + new_walker_y <= 330:
+    if (keys[pygame.K_UP] or keys[pygame.K_DOWN]) and y1 <= walker_y + new_walker_y <= y2:
         walker_y += new_walker_y
         isometric_walker_x += isometric_new_walker_x_v
         isometric_walker_y += isometric_new_walker_y_v

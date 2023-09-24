@@ -14,8 +14,8 @@ pygame.display.set_caption("Unfilled Triangle Drawing")
 
 
 
-x1 = 100+200
-x2 = 400+200
+x1 = 300
+x2 = 600
 y1 = 200
 y2 = 500
 desired = [(x1, y1), (x1, y2), (x2, y2), (x2, y1)]
@@ -29,6 +29,12 @@ cos_angle = math.cos(angle)
 
 # isometric_vertices = [(490, 285), (200, 430), (430, 545), (720, 400)]
 isometric_vertices = [(750.0, 250.0), (450.0, 400.0), (750.0, 550.0), (1050.0, 400.0)]
+isometric_point = (750.0, 250.0)
+
+x = isometric_point[0]*math.sqrt(2)
+y = isometric_point[1]*math.sqrt(2)
+square_point = (x/2 * cos_angle - y * sin_angle, x/2 * sin_angle + y * cos_angle)
+print(square_point)
 
 
 square_vertices = []
@@ -41,7 +47,10 @@ for x, y in isometric_vertices:
     square_vertices.append((new_x, new_y))
 
 square_vertices = [(x,  y + 300) for x, y in square_vertices]
+square_point = (square_point[0],  square_point[1] + 300)
 print(square_vertices)
+
+
 
 
 font = pygame.font.Font(None, 36)
@@ -73,6 +82,8 @@ while running:
     pygame.draw.polygon(screen, (255, 0, 0), isometric_vertices, 2)
     pygame.draw.polygon(screen, (255, 0, 0), square_vertices, 2)
     pygame.draw.polygon(screen, (255, 255, 255), desired, 2)
+    pygame.draw.circle(screen, (0, 255, 0), isometric_point, 5)  # Red point at walker's position
+    pygame.draw.circle(screen, (0, 255, 0), square_point, 5)  # Red point at walker's position
 
     # Update the display
     pygame.display.flip()

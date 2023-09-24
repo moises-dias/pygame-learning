@@ -80,6 +80,7 @@ while running:
                 new_y = 2*(x * sin_angle + y * cos_angle)/math.sqrt(2)
                 vertices_2.append((new_x, new_y))
             vertices_2 = [(x + 500, 100 + y/2) for x, y in vertices_2]
+            print(vertices_2)
 
     # Clear the screen
     screen.fill(white)
@@ -88,6 +89,7 @@ while running:
     screen.blit(image, image_rect)
     pygame.draw.polygon(screen, (255, 0, 255), vertices, 2)
     pygame.draw.polygon(screen, (255, 0, 255), vertices_2, 2)
+    pygame.draw.polygon(screen,  (0, 0, 0), [(490, 285), (200, 430), (430, 545), (720, 400)], 2)
 
     # Draw the lines if draw_lines is True
 

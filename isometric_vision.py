@@ -38,12 +38,12 @@ cos_angle = math.cos(angle)
 vertices_2 = []
 for x, y in vertices:
     new_x = 2*(x * cos_angle - y * sin_angle)/math.sqrt(2)
-    new_y = 2*(x * sin_angle + y * cos_angle)/math.sqrt(2)
+    new_y = (x * sin_angle + y * cos_angle)/math.sqrt(2)
     vertices_2.append((new_x, new_y))
 
 
-vertices_2 = [(x + isometric_x_distance, y/2) for x, y in vertices_2]
-
+vertices_2 = [(x + isometric_x_distance, y) for x, y in vertices_2]
+print(vertices_2)
 
 isometric_walker_x = vertices_2[0][0]
 isometric_walker_y = vertices_2[0][1]

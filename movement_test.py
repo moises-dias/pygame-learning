@@ -36,6 +36,7 @@ image = pygame.image.load("assets/simple_isometric.png")
 image_rect = image.get_rect()
 
 velocity = 2
+velocity_reducer = 0.5
 
 running = True
 while running:
@@ -67,38 +68,46 @@ while running:
     if keys[pygame.K_DOWN]:
         down = 1
 
-    if (up + down + left + right) == 1:
+    direction_sum = up + down + left + right
+    if (direction_sum) == 1:
         if left == 1:
             if not (x1 <= walker_x - velocity):
                 if (walker_y + velocity <= y2):
-                    down += 1   
+                    down = 1   
             elif not (walker_y + velocity <= y2):
                 if (x1 <= walker_x - velocity):
-                    up += 1
+                    up = 1
 
         elif right == 1:
             if not (walker_x + velocity <= x2):
                 if (y1 <= walker_y - velocity):
-                    up += 1   
+                    up = 1   
             elif not (y1 <= walker_y - velocity):
                 if (walker_x + velocity <= x2):
-                    down += 1
+                    down = 1
 
         elif up == 1:
             if not (x1 <= walker_x - velocity):
                 if (y1 <= walker_y - velocity):
-                    right += 1   
+                    right = 1   
             elif not (y1 <= walker_y - velocity):
                 if (x1 <= walker_x - velocity):
-                    left += 1
+                    left = 1
 
         elif down == 1:
             if not (walker_y + velocity <= y2):
                 if (walker_x + velocity <= x2):
-                    right += 1   
+                    right = 1   
             elif not (walker_x + velocity <= x2):
                 if (walker_y + velocity <= y2):
-                    left += 1
+                    left = 1
+
+    if direction_sum != (up + down + left + right):
+        up *= velocity_reducer
+        down *= velocity_reducer
+        left *= velocity_reducer
+        right *= velocity_reducer
+        
 
     if (right - left) != 0:
         new_walker_x_h = (right - left) * velocity

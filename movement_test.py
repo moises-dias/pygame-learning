@@ -53,41 +53,22 @@ while running:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_LEFT]:
-        new_walker_x_h = -velocity
-        new_walker_y_h = +velocity
-        isometric_new_walker_x = -2*velocity
+        new_walker_x_h -= velocity
+        new_walker_y_h += velocity
+        isometric_new_walker_x -= 2*velocity
     if keys[pygame.K_RIGHT]:
-        new_walker_x_h = +velocity
-        new_walker_y_h = -velocity
-        isometric_new_walker_x = 2 * velocity
+        new_walker_x_h += velocity
+        new_walker_y_h -= velocity
+        isometric_new_walker_x += 2*velocity
     if keys[pygame.K_UP]:
-        new_walker_x_v = -velocity
-        new_walker_y_v = -velocity
-        isometric_new_walker_y = -velocity
+        new_walker_x_v -= velocity
+        new_walker_y_v -= velocity
+        isometric_new_walker_y -= velocity
     if keys[pygame.K_DOWN]:
-        new_walker_x_v = +velocity
-        new_walker_y_v = +velocity
-        isometric_new_walker_y = +velocity
+        new_walker_x_v += velocity
+        new_walker_y_v += velocity
+        isometric_new_walker_y += velocity
 
-    # squares = [[(520, 40), (520, 330), (760, 330), (760, 40)]]
-
-    # if not (x1 <= walker_x + new_walker_x_h <= x2 and y1 <= walker_y + new_walker_y_h <= y2):
-    #     new_walker_x_h = 0
-    #     new_walker_y_h = 0
-    #     isometric_new_walker_x = 0
-    # if not (x1 <= walker_x + new_walker_x_v <= x2 and y1 <= walker_y + new_walker_y_v <= y2):
-    #     new_walker_x_v = 0
-    #     new_walker_y_v = 0
-    #     isometric_new_walker_y = 0
-    
-
-    
-    # elif not(x1 <= walker_x + new_walker_x_h + new_walker_x_v <= x2):
-    #     new_walker_x_h = 0
-    #     new_walker_x_v = 0
-    #     isometric_new_walker_y = 0
-    # elif y1 <= walker_y + new_walker_y_h + new_walker_y_v <= y2:
-    #     pass
 
     if  x1 <= walker_x + new_walker_x_h + new_walker_x_v <= x2 and y1 <= walker_y + new_walker_y_h + new_walker_y_v <= y2:
         walker_x += new_walker_x_h

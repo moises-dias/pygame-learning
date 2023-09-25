@@ -71,24 +71,32 @@ while running:
 
     # squares = [[(520, 40), (520, 330), (760, 330), (760, 40)]]
 
-    if not (x1 <= walker_x + new_walker_x_h <= x2 and y1 <= walker_y + new_walker_y_h <= y2):
-        new_walker_x_h = 0
-        new_walker_y_h = 0
-        isometric_new_walker_x = 0
-    if not (x1 <= walker_x + new_walker_x_v <= x2 and y1 <= walker_y + new_walker_y_v <= y2):
-        new_walker_x_v = 0
-        new_walker_y_v = 0
-        isometric_new_walker_y = 0
+    # if not (x1 <= walker_x + new_walker_x_h <= x2 and y1 <= walker_y + new_walker_y_h <= y2):
+    #     new_walker_x_h = 0
+    #     new_walker_y_h = 0
+    #     isometric_new_walker_x = 0
+    # if not (x1 <= walker_x + new_walker_x_v <= x2 and y1 <= walker_y + new_walker_y_v <= y2):
+    #     new_walker_x_v = 0
+    #     new_walker_y_v = 0
+    #     isometric_new_walker_y = 0
     
-    walker_x += new_walker_x_h
-    walker_y += new_walker_y_h
-    isometric_walker_x += isometric_new_walker_x
-    walker_x += new_walker_x_v
-    walker_y += new_walker_y_v
-    isometric_walker_y += isometric_new_walker_y
 
+    
+    # elif not(x1 <= walker_x + new_walker_x_h + new_walker_x_v <= x2):
+    #     new_walker_x_h = 0
+    #     new_walker_x_v = 0
+    #     isometric_new_walker_y = 0
+    # elif y1 <= walker_y + new_walker_y_h + new_walker_y_v <= y2:
+    #     pass
 
+    if  x1 <= walker_x + new_walker_x_h + new_walker_x_v <= x2 and y1 <= walker_y + new_walker_y_h + new_walker_y_v <= y2:
+        walker_x += new_walker_x_h
+        walker_y += new_walker_y_h
+        isometric_walker_x += isometric_new_walker_x
 
+        walker_x += new_walker_x_v
+        walker_y += new_walker_y_v
+        isometric_walker_y += isometric_new_walker_y
         
     screen.fill((0, 0, 0)) 
     screen.blit(image, image_rect)

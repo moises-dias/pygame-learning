@@ -18,16 +18,16 @@ isometrics = [[(480, 280), (190, 425), (430, 545), (720, 400)]]
 square_point = (660, 200)
 walker_x = square_point[0]
 walker_y = square_point[1]
-new_walker_x = 0
-new_walker_y = 0
+new_walker_x_v = 0
+new_walker_y_v = 0
+new_walker_x_h = 0
+new_walker_y_h = 0
 
 isometric_point = (460.0, 430.0)
 isometric_walker_x = isometric_point[0]
 isometric_walker_y = isometric_point[1]
-isometric_new_walker_x_h = 0
-isometric_new_walker_y_h = 0
-isometric_new_walker_x_v = 0
-isometric_new_walker_y_v = 0
+isometric_new_walker_x = 0
+isometric_new_walker_y = 0
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
@@ -43,40 +43,50 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+    new_walker_x_h = 0
+    new_walker_y_h = 0
+    new_walker_x_v = 0
+    new_walker_y_v = 0
+    isometric_new_walker_x = 0
+    isometric_new_walker_y = 0
+
     keys = pygame.key.get_pressed()
+
     if keys[pygame.K_LEFT]:
-        new_walker_x = -velocity
-        isometric_new_walker_x_h = -velocity
-        isometric_new_walker_y_h = -velocity * 0.5
+        new_walker_x_h = -velocity
+        new_walker_y_h = +velocity
+        isometric_new_walker_x = -2*velocity
     if keys[pygame.K_RIGHT]:
-        new_walker_x = +velocity
-        isometric_new_walker_x_h = +velocity
-        isometric_new_walker_y_h = +velocity * 0.5
+        new_walker_x_h = +velocity
+        new_walker_y_h = -velocity
+        isometric_new_walker_x = 2 * velocity
     if keys[pygame.K_UP]:
-        new_walker_y = -velocity
-        isometric_new_walker_x_v = +velocity
-        isometric_new_walker_y_v = -velocity * 0.5
+        new_walker_x_v = -velocity
+        new_walker_y_v = -velocity
+        isometric_new_walker_y = -velocity
     if keys[pygame.K_DOWN]:
-        new_walker_y = +velocity
-        isometric_new_walker_x_v = -velocity
-        isometric_new_walker_y_v = +velocity * 0.5
+        new_walker_x_v = +velocity
+        new_walker_y_v = +velocity
+        isometric_new_walker_y = +velocity
 
     # squares = [[(520, 40), (520, 330), (760, 330), (760, 40)]]
 
-    if (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT]) and x1 <= walker_x + new_walker_x <= x2:
-        walker_x += new_walker_x
-        isometric_walker_x += isometric_new_walker_x_h
-        isometric_walker_y += isometric_new_walker_y_h
-    if (keys[pygame.K_UP] or keys[pygame.K_DOWN]) and y1 <= walker_y + new_walker_y <= y2:
-        walker_y += new_walker_y
-        isometric_walker_x += isometric_new_walker_x_v
-        isometric_walker_y += isometric_new_walker_y_v
+    if not (x1 <= walker_x + new_walker_x_h <= x2 and y1 <= walker_y + new_walker_y_h <= y2):
+        new_walker_x_h = 0
+        new_walker_y_h = 0
+        isometric_new_walker_x = 0
+    if not (x1 <= walker_x + new_walker_x_v <= x2 and y1 <= walker_y + new_walker_y_v <= y2):
+        new_walker_x_v = 0
+        new_walker_y_v = 0
+        isometric_new_walker_y = 0
     
-    # x = walker_x
-    # y = walker_y
-    # new_x = 2*(x * cos_angle - y * sin_angle)/sqrt_2
-    # new_y = (x * sin_angle + y * cos_angle)/sqrt_2
-    # isometric_point = (new_x, new_y)
+    walker_x += new_walker_x_h
+    walker_y += new_walker_y_h
+    isometric_walker_x += isometric_new_walker_x
+    walker_x += new_walker_x_v
+    walker_y += new_walker_y_v
+    isometric_walker_y += isometric_new_walker_y
+
 
 
         

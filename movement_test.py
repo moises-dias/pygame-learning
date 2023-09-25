@@ -52,22 +52,47 @@ while running:
 
     keys = pygame.key.get_pressed()
 
+    keys_pressed = []
+
     if keys[pygame.K_LEFT]:
+        keys_pressed.append("left")
         new_walker_x_h -= velocity
         new_walker_y_h += velocity
         isometric_new_walker_x -= 2*velocity
     if keys[pygame.K_RIGHT]:
+        keys_pressed.append("right")
         new_walker_x_h += velocity
         new_walker_y_h -= velocity
         isometric_new_walker_x += 2*velocity
     if keys[pygame.K_UP]:
+        keys_pressed.append("up")
         new_walker_x_v -= velocity
         new_walker_y_v -= velocity
         isometric_new_walker_y -= velocity
     if keys[pygame.K_DOWN]:
+        keys_pressed.append("down")
         new_walker_x_v += velocity
         new_walker_y_v += velocity
         isometric_new_walker_y += velocity
+
+# usar alguma logica de 4 variaveis, left, right, down, up, e ir somando 1 nelas dependendo de q tecla foi pressionada
+# e de qual movimento adicionar (logica abaixo) e no final subtrair right - left, se tiver 2 pra esquerda o resultado
+# da negativo e ja movo pra esquerda
+
+    if len(keys_pressed) == 1:
+        key_pressed = keys_pressed[0]
+        if key_pressed == "left":
+            if not (x1 <= walker_x + new_walker_x_h + new_walker_x_v <= x2): # pode tirar o x2 dpois
+                if (new_walker_y_h + new_walker_y_v) > 0:
+                    new_walker_x_v += velocity
+                    new_walker_y_v += velocity
+                    isometric_new_walker_y += velocity    
+            if not (y1 <= walker_y + new_walker_y_h + new_walker_y_v <= y2): # pode tirar o x2 dpois
+                if (new_walker_y_h + new_walker_y_v) > 0:
+                    new_walker_x_v -= velocity
+                    new_walker_y_v -= velocity
+                    isometric_new_walker_y -= velocity  
+        # ajustar aqui os movimentos
 
 
     if  x1 <= walker_x + new_walker_x_h + new_walker_x_v <= x2 and y1 <= walker_y + new_walker_y_h + new_walker_y_v <= y2:
@@ -85,12 +110,13 @@ while running:
  
     square_to_draw = [(x, y) for x,y in squares[0]]
     square_point_to_draw = (walker_x, walker_y)
+    
     # print(square_to_draw)
 
     pygame.draw.circle(screen, (0, 255, 0), square_point, 5)
     pygame.draw.circle(screen, (0, 255, 0), isometric_point, 5)
-    pygame.draw.circle(screen, (0, 255, 255), square_point_to_draw, 5)
-    pygame.draw.circle(screen, (0, 255, 255), (isometric_walker_x, isometric_walker_y), 5)
+    pygame.draw.circle(screen, (0, 0, 0), square_point_to_draw, 5)
+    pygame.draw.circle(screen, (0, 0, 0), (isometric_walker_x, isometric_walker_y), 5)
 
     for v in isometrics:
         pygame.draw.polygon(screen, (0, 255, 0), v, 2)  

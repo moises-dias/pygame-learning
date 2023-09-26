@@ -85,6 +85,7 @@ while running:
 
     # se o resultado ta dentro de algum squares_1, seta os moves e vai pro proximo
     updated_1 = False
+    print(walker_x, walker_y)
     for sq1 in squares_1:
         x1 = sq1[0][0]
         y1 = sq1[0][1]
@@ -95,6 +96,12 @@ while running:
         new_walker_y = (left - right) * velocity + (down - up) * velocity
         isometric_new_walker_x = 2 * (right - left) * velocity
         isometric_new_walker_y = (down - up) * velocity
+
+        # if left == 1 or right == 1:
+        #     new_walker_x *= velocity_reducer
+        #     new_walker_y *= velocity_reducer
+        #     isometric_new_walker_x *= velocity_reducer
+        #     isometric_new_walker_y *= velocity_reducer
 
         if  x1 <= walker_x + new_walker_x <= x2 and y1 <= walker_y + new_walker_y <= y2:
 
@@ -125,7 +132,6 @@ while running:
                 continue
 
             if  x1 <= walker_x + new_walker_x <= x2 or y1 <= walker_y + new_walker_y <= y2:
-                print("X ou Y dentro")
                 if x1 <= walker_x + new_walker_x <= x2:
                     if left == 1:
                         up = 1

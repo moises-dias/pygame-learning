@@ -34,16 +34,10 @@ isometrics = [
 square_point = (560, 290)
 walker_x = square_point[0]
 walker_y = square_point[1]
-new_walker_x_v = 0
-new_walker_y_v = 0
-new_walker_x_h = 0
-new_walker_y_h = 0
 
 isometric_point = (270, 425)
 isometric_walker_x = isometric_point[0]
 isometric_walker_y = isometric_point[1]
-isometric_new_walker_x = 0
-isometric_new_walker_y = 0
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
@@ -85,7 +79,7 @@ while running:
 
     # se o resultado ta dentro de algum squares_1, seta os moves e vai pro proximo
     updated_1 = False
-    print(walker_x, walker_y)
+
     for sq1 in squares_1:
         x1 = sq1[0][0]
         y1 = sq1[0][1]

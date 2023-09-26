@@ -7,11 +7,15 @@ pygame.init()
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
 
-squares_1 = [
+floors_squares = [
 [(530, 220), (530, 330), (760, 330), (760, 220)],
 [(620, 80), (620, 220), (760, 220), (760, 80)],
 [(660, 40), (660, 80), (760, 80), (760, 40)],
+]
+npcs_squares = [
 [(620, 40), (620, 80), (660, 80), (660, 40)],
+]
+door_squares = [
 [(530, 230), (530, 320), (580, 320), (580, 230)]
 ]
 
@@ -104,7 +108,7 @@ while running:
         isometric_new_walker_x *= velocity_reducer
         isometric_new_walker_y *= velocity_reducer
 
-    for sq1 in squares_1:
+    for sq1 in floors_squares:
         x1 = sq1[0][0]
         y1 = sq1[0][1]
         x2 = sq1[2][0]
@@ -130,7 +134,7 @@ while running:
         # se x em algum quadrado, anda em x
         # se y em algum quadrado, anda em y
 
-        for sq1 in squares_1:
+        for sq1 in floors_squares:
             x1 = sq1[0][0]
             y1 = sq1[0][1]
             x2 = sq1[2][0]
@@ -176,7 +180,26 @@ while running:
                     isometric_walker_x += isometric_new_walker_x
                     isometric_walker_y += isometric_new_walker_y
                 break     
-        
+
+
+    for sq1 in door_squares:
+        x1 = sq1[0][0]
+        y1 = sq1[0][1]
+        x2 = sq1[2][0]
+        y2 = sq1[2][1]
+
+        if  x1 <= walker_x + new_walker_x <= x2 and y1 <= walker_y + new_walker_y <= y2:
+            print("open door")
+
+    for sq1 in npcs_squares:
+        x1 = sq1[0][0]
+        y1 = sq1[0][1]
+        x2 = sq1[2][0]
+        y2 = sq1[2][1]
+
+        if  x1 <= walker_x + new_walker_x <= x2 and y1 <= walker_y + new_walker_y <= y2:
+            print("talk to npc")
+
     screen.fill((0, 0, 0)) 
     screen.blit(image, image_rect)
 
@@ -200,9 +223,12 @@ while running:
     for v in isometrics:
         pygame.draw.polygon(screen, (0, 255, 0), v, 2)  
     pygame.draw.circle(screen, (0, 0, 0), (isometric_walker_x, isometric_walker_y), 5)
-    for v in squares_1:
+    for v in floors_squares:
         pygame.draw.polygon(screen, (0, 0, 255), v, 2)   
-        # pygame.draw.polygon(screen, (0, 0, 0), v)
+    for v in npcs_squares:
+        pygame.draw.polygon(screen, (255, 0, 255), v, 2)   
+    for v in door_squares:
+        pygame.draw.polygon(screen, (255, 0, 0), v, 2)   
     
 
     pygame.display.flip()

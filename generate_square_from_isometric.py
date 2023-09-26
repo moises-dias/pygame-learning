@@ -10,8 +10,8 @@ SCREEN_HEIGHT = 1000
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
-img_name = "simple_isometric"
-img_extension = "png"
+img_name = "isometric"
+img_extension = "jpg"
 image = pygame.image.load(f"assets/{img_name}.{img_extension}")
 image_rect = image.get_rect()
 

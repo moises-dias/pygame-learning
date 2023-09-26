@@ -7,17 +7,31 @@ SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
 
 squares_1 = [
-    [(520, 40), (520, 330), (760, 330), (760, 40)],
-    [(760, 40), (760, 170), (880, 170), (880, 40)]
+[(530, 180), (530, 380), (580, 380), (580, 180)],
+[(390, 180), (390, 380), (430, 380), (430, 180)],
+[(430, 330), (430, 380), (530, 380), (530, 330)],
+[(430, 180), (430, 230), (530, 230), (530, 180)],
+[(460, 110), (460, 180), (520, 180), (520, 110)],
+[(350, 30), (350, 110), (630, 110), (630, 30)],
+[(350, -170), (350, 30), (460, 30), (460, -170)],
+[(530, -170), (530, 30), (630, 30), (630, -170)],
+[(460, -170), (460, -80), (530, -80), (530, -170)]
 ]
 
 
 isometrics = [
-    [(480, 280), (190, 425), (430, 545), (720, 400)],
-    [(720, 400), (590, 465), (710, 525), (840, 460)]
+[(350, 355), (150, 455), (200, 480), (400, 380)],
+[(210, 285), (10, 385), (50, 405), (250, 305)],
+[(100, 380), (50, 405), (150, 455), (200, 430)],
+[(250, 305), (200, 330), (300, 380), (350, 355)],
+[(350, 285), (280, 320), (340, 350), (410, 315)],
+[(320, 190), (240, 230), (520, 370), (600, 330)],
+[(520, 90), (320, 190), (430, 245), (630, 145)],
+[(700, 180), (500, 280), (600, 330), (800, 230)],
+[(630, 145), (540, 190), (610, 225), (700, 180)]
 ]
 
-square_point = (660, 200)
+square_point = (560, 290)
 walker_x = square_point[0]
 walker_y = square_point[1]
 new_walker_x_v = 0
@@ -25,7 +39,7 @@ new_walker_y_v = 0
 new_walker_x_h = 0
 new_walker_y_h = 0
 
-isometric_point = (460.0, 430.0)
+isometric_point = (270, 425)
 isometric_walker_x = isometric_point[0]
 isometric_walker_y = isometric_point[1]
 isometric_new_walker_x = 0
@@ -34,7 +48,7 @@ isometric_new_walker_y = 0
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
-image = pygame.image.load("assets/simple_isometric.png")
+image = pygame.image.load("assets/isometric.jpg")
 image_rect = image.get_rect()
 
 velocity = 2
@@ -151,17 +165,18 @@ while running:
     screen.blit(image, image_rect)
 
  
-    square_point_to_draw = (walker_x, walker_y)
 
-    pygame.draw.circle(screen, (0, 255, 0), square_point, 5)
-    pygame.draw.circle(screen, (0, 255, 0), isometric_point, 5)
+    # pygame.draw.circle(screen, (0, 255, 0), square_point, 5)
+    # pygame.draw.circle(screen, (0, 255, 0), isometric_point, 5)
+
+    square_point_to_draw = (walker_x, walker_y)
     pygame.draw.circle(screen, (0, 0, 0), square_point_to_draw, 15)
-    pygame.draw.circle(screen, (0, 0, 0), (isometric_walker_x, isometric_walker_y), 15)
 
     for v in isometrics:
         pygame.draw.polygon(screen, (0, 255, 0), v, 2)  
+    pygame.draw.circle(screen, (0, 0, 0), (isometric_walker_x, isometric_walker_y), 15)
     for v in squares_1:
-        pygame.draw.polygon(screen, (0, 255, 0), v, 2)   
+        pygame.draw.polygon(screen, (0, 0, 255), v, 2)   
         # pygame.draw.polygon(screen, (0, 0, 0), v)
     
 

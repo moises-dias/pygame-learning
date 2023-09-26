@@ -97,11 +97,11 @@ while running:
         isometric_new_walker_x = 2 * (right - left) * velocity
         isometric_new_walker_y = (down - up) * velocity
 
-        # if left == 1 or right == 1:
-        #     new_walker_x *= velocity_reducer
-        #     new_walker_y *= velocity_reducer
-        #     isometric_new_walker_x *= velocity_reducer
-        #     isometric_new_walker_y *= velocity_reducer
+        if left == 1 or right == 1:
+            new_walker_x *= velocity_reducer
+            new_walker_y *= velocity_reducer
+            isometric_new_walker_x *= velocity_reducer
+            isometric_new_walker_y *= velocity_reducer
 
         if  x1 <= walker_x + new_walker_x <= x2 and y1 <= walker_y + new_walker_y <= y2:
 
@@ -161,10 +161,12 @@ while running:
                 isometric_new_walker_x = 2 * (right - left) * velocity
                 isometric_new_walker_y = (down - up) * velocity
 
-                walker_x += new_walker_x
-                walker_y += new_walker_y
-                isometric_walker_x += isometric_new_walker_x
-                isometric_walker_y += isometric_new_walker_y
+                if  x1 <= walker_x + new_walker_x <= x2 and y1 <= walker_y + new_walker_y <= y2:
+
+                    walker_x += new_walker_x
+                    walker_y += new_walker_y
+                    isometric_walker_x += isometric_new_walker_x
+                    isometric_walker_y += isometric_new_walker_y
                 break     
         
     screen.fill((0, 0, 0)) 

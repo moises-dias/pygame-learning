@@ -54,9 +54,6 @@ class Player:
                 break
 
         if not updated and (up + down + left + right) == 1:
-            print(self.pos) # debug
-            if self.pos == [759.0, 219.0]: # debug
-                print("here") # debug
             for bbox in floor_bboxes:
                 x1 = bbox[0][0]
                 y1 = bbox[0][1]
@@ -64,15 +61,9 @@ class Player:
                 y2 = bbox[2][1]
 
 
-                # bug: entra nesse if pq ele ta dentro
-                # 759, 219 está dentro do canto 760, 220
-                if  not (x1 <= self.pos[0] <= x2 and y1 <= self.pos[1] <= y2):
-                    continue
+                # movendo só em x ou movendo só em y eu to dentro de algum quadrado?
+                if (x1 <= self.pos[0] + d_x <= x2 and y1 <= self.pos[1] <= y2) or (x1 <= self.pos[0] <= x2 and y1 <= self.pos[1] + d_y <= y2):
 
-                print([self.pos[0] + d_x, self.pos[1] + d_y])
-                # bug: NAO entra nesse if pq ao mover ele sai
-                # 761, 221 NAO está dentro do canto 760, 220
-                if  x1 <= self.pos[0] + d_x <= x2 or y1 <= self.pos[1] + d_y <= y2:
                     if x1 <= self.pos[0] + d_x <= x2:
                         if left == 1:
                             up = 1
@@ -92,9 +83,6 @@ class Player:
                         elif down == 1:
                             left = 1
 
-                    if self.pos == [759.0, 219.0]: # debug
-                        print(up, down, left, right) # debug
-
                     up *= self.speed_reducer
                     down *= self.speed_reducer
                     left *= self.speed_reducer
@@ -111,7 +99,7 @@ class Player:
                         self.pos[1] += d_y
                         self.isometric_pos[0] += isometric_d_x
                         self.isometric_pos[1] += isometric_d_y
-                    break     
+                        break  
 
     def get_isometric_position_square(self):
         isometric_position_vertices = []

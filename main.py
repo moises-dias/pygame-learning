@@ -55,7 +55,6 @@ while running:
 
     pygame.draw.polygon(screen, (0, 0, 255), player.get_position_square(), 2)
     pygame.draw.circle(screen, (0, 0, 0), player.pos, 5)
-    print(player.pos) # debug
 
     for bbox in stage.floor.squares:
         pygame.draw.polygon(screen, (0, 0, 255), bbox, 2)  

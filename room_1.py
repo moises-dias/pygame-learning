@@ -1,7 +1,7 @@
 from floor_1 import Floor1
 from door_1 import Door1
 
-class Stage1:
+class Room1:
     def __init__(self, spriteflyweight):
         self.floor = Floor1()
         self.doors = [

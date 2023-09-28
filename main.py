@@ -1,6 +1,6 @@
 import pygame
 import sys
-from stage_1 import Stage1
+from room_1 import Room1
 from player import Player
 from sprite_flyweight import SpriteFlyweight
 
@@ -15,10 +15,10 @@ font = pygame.font.Font(None, 36)
 
 sprite_flyweight = SpriteFlyweight()
 
-stage = Stage1(sprite_flyweight)
+room = Room1(sprite_flyweight)
 player = Player(
-    stage.starting_position, 
-    stage.isometric_starting_position, 
+    room.starting_position, 
+    room.isometric_starting_position, 
     sprite_flyweight
 )
 
@@ -47,18 +47,18 @@ while running:
     
     if (up + down + left + right) > 0:
         # player.walking = True
-        player.walk(up, down, left, right, stage.floor.squares)
+        player.walk(up, down, left, right, room.floor.squares)
     else:
         player.walking = False
 
     player.update()
-    stage.update(player.pos)
-    # stage.update passando player position pra ver se entrou numa porta?
+    room.update(player.pos)
+    # room.update passando player position pra ver se entrou numa porta?
 
     screen.fill((0, 0, 0)) 
-    screen.blit(stage.map_image, stage.map_image_rect)
+    screen.blit(room.map_image, room.map_image_rect)
 
-    for img_info in stage.to_draw:
+    for img_info in room.to_draw:
         screen.blit(img_info["img"], img_info["pos"])
 
     screen.blit(player.sprite.get_image(), player.get_sprite_position())
@@ -70,12 +70,12 @@ while running:
     pygame.draw.polygon(screen, (0, 0, 255), player.get_position_square(), 2)
     pygame.draw.circle(screen, (0, 0, 0), player.pos, 5)
 
-    for bbox in stage.floor.squares:
+    for bbox in room.floor.squares:
         pygame.draw.polygon(screen, (0, 0, 255), bbox, 2)  
-    for bbox in stage.floor.isometric_squares:
+    for bbox in room.floor.isometric_squares:
         pygame.draw.polygon(screen, (0, 255, 0), bbox, 2) 
  
-    for door in stage.doors:
+    for door in room.doors:
         pygame.draw.polygon(screen, (255, 255, 0), door.square, 2)  
         pygame.draw.polygon(screen, (255, 255, 0), door.isometric_square, 2)  
     

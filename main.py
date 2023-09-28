@@ -3,6 +3,7 @@ import sys
 from floor_1 import Floor1
 from stage_1 import Stage1
 from player import Player
+from sprite_flyweight import SpriteFlyweight
 
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
@@ -16,9 +17,15 @@ image = pygame.image.load("assets/simple_isometric.png")
 
 image_rect = image.get_rect()
 
+sprite_flyweight = SpriteFlyweight()
+
 floor = Floor1()
 stage = Stage1(floor)
-player = Player(stage.starting_position, stage.isometric_starting_position)
+player = Player(
+    stage.starting_position, 
+    stage.isometric_starting_position, 
+    sprite_flyweight.get_image("assets/player.jpg")
+)
 
 
 running = True
@@ -48,6 +55,7 @@ while running:
 
     screen.fill((0, 0, 0)) 
     screen.blit(image, image_rect)
+    screen.blit(player.sprite.get_image(), player.get_sprite_position())
 
 
     pygame.draw.polygon(screen, (0, 255, 0), player.get_isometric_position_square(), 2)

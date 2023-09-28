@@ -1,5 +1,8 @@
+from player_sprite import PlayerSprite
+
 class Player:
-    def __init__(self, pos, isometric_pos):
+    def __init__(self, pos, isometric_pos, sprite_sheet):
+        self.sprite = PlayerSprite(sprite_sheet)
         self.border = 15
         self.pos = pos
         self.isometric_pos = isometric_pos
@@ -17,6 +20,7 @@ class Player:
         self.speed = 2
         self.speed_reducer = 0.5
     
+    #TODO walk tem que atualizar os atributos da sprite
     def walk(self, up, down, left, right, floor_bboxes):
         d_x = 0
         d_y = 0
@@ -112,3 +116,9 @@ class Player:
         for v in self.square_reference:
             position_vertices.append((self.pos[0] + v[0], self.pos[1] + v[1]))
         return position_vertices
+
+    def get_sprite_position(self):
+        return [
+            self.isometric_pos[0] - self.sprite.offset_x, 
+            self.isometric_pos[1] - self.sprite.offset_y
+        ]

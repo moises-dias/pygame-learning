@@ -15,11 +15,11 @@ font = pygame.font.Font(None, 36)
 
 sprite_flyweight = SpriteFlyweight()
 
-stage = Stage1()
+stage = Stage1(sprite_flyweight)
 player = Player(
     stage.starting_position, 
     stage.isometric_starting_position, 
-    sprite_flyweight.get_image("assets/player_with_idle.png")
+    sprite_flyweight
 )
 
 

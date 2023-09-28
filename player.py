@@ -1,8 +1,8 @@
 from player_sprite import PlayerSprite
 
 class Player:
-    def __init__(self, pos, isometric_pos, sprite_sheet):
-        self.sprite = PlayerSprite(sprite_sheet)
+    def __init__(self, pos, isometric_pos, spriteflyweight):
+        self.sprite = PlayerSprite(spriteflyweight.get_image("assets/player_with_idle.png"))
         self.border = 15
         self.pos = pos
         self.isometric_pos = isometric_pos

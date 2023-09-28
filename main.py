@@ -24,7 +24,7 @@ stage = Stage1(floor)
 player = Player(
     stage.starting_position, 
     stage.isometric_starting_position, 
-    sprite_flyweight.get_image("assets/player.jpg")
+    sprite_flyweight.get_image("assets/player_with_idle.png")
 )
 
 
@@ -51,7 +51,7 @@ while running:
         down = 1
     
     if (up + down + left + right) > 0:
-        player.walking = True
+        # player.walking = True
         player.walk(up, down, left, right, stage.floor.squares)
     else:
         player.walking = False

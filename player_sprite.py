@@ -1,5 +1,11 @@
 
 class PlayerSprite:
+    # condições:
+    # imagem de 800*1600
+    # 8 frames por tipo de movimento
+    # 8 colunas e 16 linhas
+    # as primeiras 8 linhas devem ser: S,O,E,N,SO,NO,SE,NE idle
+    # as ultimas 8 linhas devem ser: S,O,E,N,SO,NO,SE,NE andando
     def __init__(self, sprite_sheet):
         self.sprite_sheet = sprite_sheet
         self.offset_x = 50
@@ -7,7 +13,7 @@ class PlayerSprite:
         self.frame_w = 100
         self.frame_h = 100
         self.direction = "S"
-        self.moving = True
+        self.walking = False
         self.tick_count = 0
         self.tick_per_frame = 5
         self.current_frame = 0
@@ -28,7 +34,7 @@ class PlayerSprite:
         cropped_image = self.sprite_sheet.subsurface(
             (
                 self.current_frame * self.frame_w, 
-                self.direction_dict_sprite[self.direction] * self.frame_h, 
+                (self.direction_dict_sprite[self.direction] * self.frame_h) + (8 * self.walking * self.frame_h), 
                 self.frame_w, 
                 self.frame_h
             )
@@ -37,12 +43,15 @@ class PlayerSprite:
 
     def update(self, direction, walking):
         self.tick_count += 1
-        if self.tick_count >= self.tick_per_frame:
+
+        if self.direction != direction or self.walking != walking:
+            self.direction = direction
+            self.walking = walking
+            self.tick_count = 0
+            self.current_frame = 0
+
+        elif self.tick_count >= self.tick_per_frame:
             self.tick_count = 0
             self.current_frame += 1
             if self.current_frame >= self.max_frame:
                 self.current_frame = 0
-        
-        self.direction = direction
-
-

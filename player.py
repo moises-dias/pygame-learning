@@ -19,6 +19,7 @@ class Player:
         ]
         self.speed = 2
         self.speed_reducer = 0.5
+        # TODO direction e walking e usado na sprite, mas e atributo do player, onde deixar?
         self.walking = False
         self.direction = "S"
 
@@ -37,6 +38,12 @@ class Player:
     
     #TODO walk tem que atualizar os atributos da sprite
     def walk(self, up, down, left, right, floor_bboxes):
+
+        if (up - down) != 0 or (left - right) != 0:
+            self.walking = True
+        else:
+            self.walking = False
+            return
 
         self.update_direction(up, down, left, right)
 
@@ -155,4 +162,10 @@ class Player:
         if (up, down, left, right) in self.direction_dict:
             self.direction = self.direction_dict[(up, down, left, right)]
         
-
+    def reset_position(self, pos, isometric_pos, direction):
+        self.pos = pos
+        self.isometric_pos = isometric_pos
+        self.walking = False
+        self.direction = direction
+        # TODO se o player ja estivesse parado e olhando nessa direcao pode dar ruim?
+        self.sprite.update(self.direction, self.walking)

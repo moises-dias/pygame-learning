@@ -13,11 +13,6 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
 
-# TODO colocar mapa dentro da classe stage
-image = pygame.image.load("assets/simple_isometric.png")
-
-image_rect = image.get_rect()
-
 sprite_flyweight = SpriteFlyweight()
 
 stage = Stage1()
@@ -59,7 +54,7 @@ while running:
     player.update()
 
     screen.fill((0, 0, 0)) 
-    screen.blit(image, image_rect)
+    screen.blit(stage.map_image, stage.map_image_rect)
     screen.blit(player.sprite.get_image(), player.get_sprite_position())
 
 

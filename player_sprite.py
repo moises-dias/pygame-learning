@@ -44,8 +44,11 @@ class PlayerSprite:
     def update(self, direction, walking):
         self.tick_count += 1
 
-        if self.direction != direction or self.walking != walking:
+        # TODO nao mudar current_frame e tick_count se mudar de direcao sem parar de andar?
+        if self.direction != direction:
             self.direction = direction
+        
+        if self.walking != walking:
             self.walking = walking
             self.tick_count = 0
             self.current_frame = 0

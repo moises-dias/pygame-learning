@@ -1,7 +1,7 @@
+from floor_1 import Floor1
+
 class Stage1:
-    def __init__(self, floor):
-        #TODO
-        # stage 1 sempre vai ter floor1, nao faz sentido deixar ele receber por parametro.
-        self.floor = floor
+    def __init__(self):
+        self.floor = Floor1()
         self.starting_position = [690, 160]
         self.isometric_starting_position = [530, 425]

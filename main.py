@@ -1,6 +1,5 @@
 import pygame
 import sys
-from floor_1 import Floor1
 from stage_1 import Stage1
 from player import Player
 from sprite_flyweight import SpriteFlyweight
@@ -13,14 +12,15 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
+
+# TODO colocar mapa dentro da classe stage
 image = pygame.image.load("assets/simple_isometric.png")
 
 image_rect = image.get_rect()
 
 sprite_flyweight = SpriteFlyweight()
 
-floor = Floor1()
-stage = Stage1(floor)
+stage = Stage1()
 player = Player(
     stage.starting_position, 
     stage.isometric_starting_position, 

@@ -57,10 +57,12 @@ while running:
 
     screen.fill((0, 0, 0)) 
     screen.blit(stage.map_image, stage.map_image_rect)
-    screen.blit(player.sprite.get_image(), player.get_sprite_position())
 
     for img_info in stage.to_draw:
         screen.blit(img_info["img"], img_info["pos"])
+
+    screen.blit(player.sprite.get_image(), player.get_sprite_position())
+
 
     pygame.draw.polygon(screen, (0, 255, 0), player.get_isometric_position_square(), 2)
     pygame.draw.circle(screen, (0, 0, 0), player.isometric_pos, 5)

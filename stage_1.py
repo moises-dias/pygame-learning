@@ -26,5 +26,6 @@ class Stage1:
             y2 = door.square[2][1]
 
             if  x1 <= player_pos[0] <= x2 and y1 <= player_pos[1] <= y2:
-                print("colided door")
+                
+                door.update()
                 self.to_draw.append({"img": door.sprite.get_image(), "pos": door.sprite_position})

@@ -19,9 +19,27 @@ class Player:
         ]
         self.speed = 2
         self.speed_reducer = 0.5
+        self.walking = False
+        self.direction = "S"
+
+        # TODO talvez isso fique melhor dentro da classe sprite
+        self.direction_dict = {
+            (1, 0, 0, 0): "N",
+            (0, 1, 0, 0): "S",
+            (0, 0, 1, 0): "O",
+            (0, 0, 0, 1): "E",
+            (1, 0, 1, 0): "NO",
+            (1, 0, 0, 1): "NE",
+            (0, 1, 1, 0): "SO",
+            (0, 1, 0, 1): "SE",
+        }
+
     
     #TODO walk tem que atualizar os atributos da sprite
     def walk(self, up, down, left, right, floor_bboxes):
+
+        self.update_direction(up, down, left, right)
+
         d_x = 0
         d_y = 0
         isometric_d_x = 0
@@ -122,3 +140,19 @@ class Player:
             self.isometric_pos[0] - self.sprite.offset_x, 
             self.isometric_pos[1] - self.sprite.offset_y
         ]
+
+    def update(self):
+        self.sprite.update(self.direction, self.walking)
+
+    def update_direction(self, up, down, left, right):
+        if up == down:
+            up = 0
+            down = 0
+        if left == right:
+            left = 0
+            right = 0
+        
+        if (up, down, left, right) in self.direction_dict:
+            self.direction = self.direction_dict[(up, down, left, right)]
+        
+

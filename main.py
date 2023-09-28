@@ -50,8 +50,13 @@ while running:
     if keys[pygame.K_DOWN]:
         down = 1
     
-    player.walk(up, down, left, right, stage.floor.squares)
+    if (up + down + left + right) > 0:
+        player.walking = True
+        player.walk(up, down, left, right, stage.floor.squares)
+    else:
+        player.walking = False
 
+    player.update()
 
     screen.fill((0, 0, 0)) 
     screen.blit(image, image_rect)

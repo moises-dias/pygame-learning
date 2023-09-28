@@ -11,7 +11,7 @@ class DoorSprite:
         self.offset_y = 0
         self.frame_w = 90
         self.frame_h = 70
-        self.direction = "S"
+        self.direction = "NO"
         self.tick_count = 0
 
         # colocar aqui pra onde aponta a seta
@@ -27,12 +27,13 @@ class DoorSprite:
         }
 
     def get_image(self):
+        #TODO testar *unpack aqui
         cropped_image = self.sprite_sheet.subsurface(
             (
-                self.current_frame * self.frame_w, 
-                (self.direction_dict_sprite[self.direction] * self.frame_h) + (8 * self.walking * self.frame_h), 
-                self.frame_w, 
-                self.frame_h
+                self.direction_dict_sprite[self.direction][0], 
+                self.direction_dict_sprite[self.direction][1], 
+                self.direction_dict_sprite[self.direction][2], 
+                self.direction_dict_sprite[self.direction][3]
             )
         )
         return cropped_image

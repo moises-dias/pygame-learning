@@ -31,6 +31,7 @@ class PlayerSprite:
         }
 
     def get_image(self):
+        #TODO fazer uma logica (futuramente) pra segurar subsurface e so chamar novamente se a subsurface mudar
         cropped_image = self.sprite_sheet.subsurface(
             (
                 self.current_frame * self.frame_w, 
@@ -44,7 +45,7 @@ class PlayerSprite:
     def update(self, direction, walking):
         self.tick_count += 1
 
-        # TODO nao mudar current_frame e tick_count se mudar de direcao sem parar de andar?
+        # nao esta mudando current_frame e tick_count se mudar de direcao sem parar de andar
         if self.direction != direction:
             self.direction = direction
         

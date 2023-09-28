@@ -52,6 +52,8 @@ while running:
         player.walking = False
 
     player.update()
+    stage.update(player.pos)
+    # stage.update passando player position pra ver se entrou numa porta?
 
     screen.fill((0, 0, 0)) 
     screen.blit(stage.map_image, stage.map_image_rect)
@@ -67,7 +69,11 @@ while running:
     for bbox in stage.floor.squares:
         pygame.draw.polygon(screen, (0, 0, 255), bbox, 2)  
     for bbox in stage.floor.isometric_squares:
-        pygame.draw.polygon(screen, (0, 255, 0), bbox, 2)  
+        pygame.draw.polygon(screen, (0, 255, 0), bbox, 2) 
+ 
+    for door in stage.doors:
+        pygame.draw.polygon(screen, (255, 255, 0), door.square, 2)  
+        pygame.draw.polygon(screen, (255, 255, 0), door.isometric_square, 2)  
     
 
     pygame.display.flip()

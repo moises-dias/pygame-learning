@@ -1,7 +1,7 @@
 from player_sprite import PlayerSprite
 
 class Player:
-    def __init__(self, pos, isometric_pos, spriteflyweight):
+    def __init__(self, pos, isometric_pos, starting_directon, spriteflyweight):
         self.sprite = PlayerSprite(spriteflyweight.get_image("assets/player_with_idle.png"))
         self.border = 15
         self.pos = pos
@@ -21,7 +21,7 @@ class Player:
         self.speed_reducer = 0.5
         # TODO direction e walking e usado na sprite, mas e atributo do player, onde deixar?
         self.walking = False
-        self.direction = "S"
+        self.direction = starting_directon
 
         # TODO talvez isso fique melhor dentro da classe sprite
         self.direction_dict = {

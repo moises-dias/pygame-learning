@@ -1,17 +1,17 @@
-from floor_1 import Floor1
-from door_1 import Door1
+from floor_2 import Floor2
+from door_2 import Door2
 
-class Room1:
+class Room2:
     def __init__(self, spriteflyweight):
-        self.floor = Floor1()
+        self.floor = Floor2()
         self.doors = [
-            Door1(spriteflyweight)
+            Door2(spriteflyweight)
         ]
-        self.starting_position = [600, 270]
-        self.isometric_starting_position = [330, 435]
-        self.starting_direction = "SE"
+        self.starting_position = [590, -30]
+        self.isometric_starting_position = [620, 280]
+        self.starting_direction = "NO"
 
-        self.map_image = spriteflyweight.get_image("assets/simple_isometric.png")
+        self.map_image = spriteflyweight.get_image("assets/isometric2.jpg")
         self.map_image_rect = self.map_image.get_rect()
 
         self.to_draw = []

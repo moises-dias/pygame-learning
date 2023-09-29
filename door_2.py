@@ -1,15 +1,15 @@
 from door_sprite import DoorSprite
 import math
-class Door1:
+class Door2:
     def __init__(self, spriteflyweight):
-        self.square = [(530, 230), (530, 320), (580, 320), (580, 230)]
-        self.isometric_square = [(300, 380), (210, 425), (260, 450), (350, 405)]
-        self.sprite = DoorSprite("NE", spriteflyweight.get_image("assets/arrows.png"))
+        self.square = [(620, -40), (620, 0), (640, 0), (640, -40)]
+        self.isometric_square = [(660, 290), (620, 310), (640, 320), (680, 300)]
+        self.sprite = DoorSprite("SE", spriteflyweight.get_image("assets/arrows.png"))
         # TODO onde deixar a instrucao abaixo? padronizar um alpha?
         self.sprite.sprite_sheet.set_colorkey((255, 255, 255))
-        self.sprite_position = [190, 330]
+        self.sprite_position = [650, 300]
         self.current_angle = 0
-        self.next_room = "room2"
+        self.next_room = "room1"
 
         #TODO se isso for existir, deixar na main ou numa classe pai, pra ser chamado uma vez só, e nao instanciar em toda porta
         self.sine_values = []

@@ -12,6 +12,7 @@ class PlayerSprite:
         self.offset_y = 80
         self.frame_w = 100
         self.frame_h = 100
+        # TODO ver como passar uma direction ao criar
         self.direction = "S"
         self.walking = False
         self.tick_count = 0

@@ -1,8 +1,9 @@
 import pygame
 import sys
-from room_1 import Room1
+# from room_1 import Room1
 from player import Player
 from sprite_flyweight import SpriteFlyweight
+from room_factory import RoomFactory
 
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
@@ -14,15 +15,18 @@ clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
 
 sprite_flyweight = SpriteFlyweight()
+room_factory = RoomFactory()
 
-room = Room1(sprite_flyweight)
+room = room_factory.create_room("room1", sprite_flyweight)
 player = Player(
     room.starting_position, 
     room.isometric_starting_position, 
+    room.starting_direction,
     sprite_flyweight
 )
 
-
+leaving_room = False
+entering_room = False
 running = True
 while running:
     for event in pygame.event.get():
@@ -31,19 +35,23 @@ while running:
 
     keys = pygame.key.get_pressed()
 
+    # print(pygame.mouse.get_pos()) # 330, 440
+
     left = 0
     right = 0
     up = 0
     down = 0
 
-    if keys[pygame.K_LEFT]:
-        left = 1
-    if keys[pygame.K_RIGHT]:
-        right = 1
-    if keys[pygame.K_UP]:
-        up = 1
-    if keys[pygame.K_DOWN]:
-        down = 1
+    # TODO cancelar movimento se o jogador estiver mudando de fase (transition = true?) e falar walking = false
+    if not (leaving_room or entering_room):
+        if keys[pygame.K_LEFT]:
+            left = 1
+        if keys[pygame.K_RIGHT]:
+            right = 1
+        if keys[pygame.K_UP]:
+            up = 1
+        if keys[pygame.K_DOWN]:
+            down = 1
     
     if (up + down + left + right) > 0:
         # player.walking = True
@@ -53,7 +61,12 @@ while running:
 
     player.update()
     room.update(player.pos)
-    # room.update passando player position pra ver se entrou numa porta?
+
+    if room.next_room is not None and keys[pygame.K_SPACE] and not leaving_room:
+        leaving_room = True
+        player.walking = False
+        radius = 0
+        print("move")
 
     screen.fill((0, 0, 0)) 
     screen.blit(room.map_image, room.map_image_rect)
@@ -79,6 +92,44 @@ while running:
         pygame.draw.polygon(screen, (255, 255, 0), door.square, 2)  
         pygame.draw.polygon(screen, (255, 255, 0), door.isometric_square, 2)  
     
+
+    # TODO precisa criar o transition surf toda vez?
+    if leaving_room:
+        transition_surf = pygame.Surface(screen.get_size())
+        transition_surf.set_colorkey((255, 255, 255))
+        pygame.draw.circle(transition_surf, (255, 255, 255), player.isometric_pos, (100 - radius) * 8)
+        
+        radius += 1
+        print(radius)
+        screen.blit(transition_surf, (0, 0))
+        if radius == 100:
+            print("end")
+            radius = 0
+            leaving_room = False
+            room = room_factory.create_room(room.next_room, sprite_flyweight)
+            player.reset_position(
+                room.starting_position,
+                room.isometric_starting_position,
+                room.starting_direction
+            )
+            entering_room = True
+            # TODO Aqui, deixar tudo preto menos o jogador
+            # levar a sprite do jogador até a nova posicao (enqnt ta td preto)
+            # e só entao fazer o fade pra mostrar a fase
+    
+    # TODO precisa criar o transition surf toda vez?
+    elif entering_room:
+        transition_surf = pygame.Surface(screen.get_size())
+        transition_surf.set_colorkey((255, 255, 255))
+        pygame.draw.circle(transition_surf, (255, 255, 255), player.isometric_pos, (radius) * 8)
+        
+        radius += 1
+        print(radius)
+        screen.blit(transition_surf, (0, 0))
+        if radius == 100:
+            print("end")
+            entering_room = False
+
 
     pygame.display.flip()
 

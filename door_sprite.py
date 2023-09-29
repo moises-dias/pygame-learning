@@ -5,13 +5,14 @@ class DoorSprite:
     # 8 colunas e 16 linhas
     # as primeiras 8 linhas devem ser: S,O,E,N,SO,NO,SE,NE idle
     # as ultimas 8 linhas devem ser: S,O,E,N,SO,NO,SE,NE andando
-    def __init__(self, sprite_sheet):
+    def __init__(self, direction, sprite_sheet):
         self.sprite_sheet = sprite_sheet
         self.offset_x = 0
         self.offset_y = 0
         self.frame_w = 90
         self.frame_h = 70
-        self.direction = "NO"
+        self.direction = direction
+        # TODO refatorar, ver se precisa do tick count
         self.tick_count = 0
 
         # colocar aqui pra onde aponta a seta
@@ -22,7 +23,7 @@ class DoorSprite:
             "N": (50, 80, self.frame_w, self.frame_h),
             "SO": (50, 80, self.frame_w, self.frame_h),
             "NO": (50, 80, self.frame_w, self.frame_h),
-            "SE": (50, 80, self.frame_w, self.frame_h),
+            "SE": (360, 80, self.frame_w, self.frame_h),
             "NE": (50, 80, self.frame_w, self.frame_h)
         }
 

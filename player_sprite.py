@@ -35,7 +35,7 @@ class PlayerSprite:
         cropped_image = self.sprite_sheet.subsurface(
             (
                 self.current_frame * self.frame_w, 
-                (self.direction_dict_sprite[self.direction] * self.frame_h) + (8 * self.walking * self.frame_h), 
+                (self.direction_dict_sprite[self.direction] * self.frame_h) + (8 * (1 - self.walking) * self.frame_h), 
                 self.frame_w, 
                 self.frame_h
             )
